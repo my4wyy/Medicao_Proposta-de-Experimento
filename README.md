@@ -16,8 +16,7 @@
 - **Última atualização:** 19/11/2025
 
 ### 1.5 Autores (nome, área, contato)
-- **Maisa Pires — Engenharia de Software — maisa.pires@example.com**
-- **João Victor Salim — Qualidade de Software — joao.salim@example.com**
+- **Maisa Pires — Engenharia de Software — maisa.andrade@sga.pucminas.br
 
 ### 1.6 Responsável principal (PI / dono do experimento)
 **Maisa Pires (Engenharia de Software)**
