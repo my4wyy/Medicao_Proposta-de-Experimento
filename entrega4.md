@@ -565,42 +565,81 @@ Para administradores do experimento:
 
 ---
 
+
 ## **11.3 Procedimento experimental (protocolo – passo a passo)**
 
-Abaixo está o protocolo completo, em ordem operacional:
+Abaixo está o protocolo completo, em ordem operacional, com a inclusão de um fluxograma que explica a operacionalização do experimento (instrumentos, variáveis, métricas e stakeholders).
 
 ### **Antes da Coleta**
 
-1. Seleção dos participantes elegíveis
-2. Randomização das PRs por condição
-3. Treinamento dos participantes
-4. Configuração dos scripts e dashboards internos
-5. Período de adaptação (1-2 semanas)
+1. Seleção dos participantes elegíveis (ver seção 10).
+2. Randomização das PRs por condição (script de randomização).
+3. Treinamento dos participantes (guia, video e checklist).
+4. Configuração dos scripts e dashboards internos (scripts de extracao, Google Sheets, dashboard).
+5. Período de adaptação (1–2 semanas): rodar PRs piloto para acostumar participantes.
 
-### **Durante a Coleta**
+### **Durante a Coleta — Para cada PR**
 
-Para **cada PR**:
-
-1. Identificação automática da condição (Tradicional ou IA)
-2. Atribuição da PR ao revisor usando balanceamento
-3. Revisor executa o processo normalmente
-4. Scripts registram tempo inicial e final
-5. Comentários e defeitos são categorizados
-6. Caso esteja na condição IA: registrar aceitação das sugestões
-7. Dados exportados para planilha central
+1. Identificação automática da condição (Tradicional ou IA) — *instrumento:* script de distribuicao.
+2. Atribuição da PR ao revisor usando balanceamento por experiência e tipo da PR.
+3. Revisor executa o processo normalmente (comentários, sugestões, decisões).
+4. Scripts registram timestamps (inicio, primeira resposta, final) e metadados (linhas modificadas, arquivos) — *metricas:* M1–M5.
+5. Comentários e defeitos são categorizados — *metricas:* M6–M8.
+6. Caso esteja na condição IA: registrar aceitação/rejeição das sugestões — *metricas:* M9–M10.
+7. Dados exportados para planilha central (CSV/Google Sheets) com campos padronizados.
 
 ### **Após cada ciclo semanal**
 
-1. Validação manual de 10% das PRs para garantir integridade
-2. Detecção de inconsistências nos logs
-3. Ajustes (se necessário)
+1. Validação manual de 10% das PRs.
+2. Detecção e correção de inconsistências nos logs.
+3. Ajustes no protocolo ou instrumentação (documentar).
 
 ### **Encerramento**
 
-1. Aplicação dos questionários de percepção
-2. Consolidação de dados
-3. Backup e assinatura de integridade
-4. Início da análise estatística
+1. Aplicação dos questionários de percepção (Likert + NPS).
+2. Consolidação e limpeza dos dados.
+3. Backup da base final e assinatura de integridade.
+4. Início da análise estatística.
+
+---
+
+## **Fluxograma (Mermaid)**
+
+
+```mermaid
+flowchart TD
+
+  %% BEFORE
+  A1[Selecao de participantes] --> A2[Randomizacao das PRs]
+  A2 --> A3[Treinamento dos participantes]
+  A3 --> A4[Configuracao de scripts e dashboards]
+  A4 --> A5[Periodo de adaptacao]
+
+  %% DURING
+  A5 --> B0[PR identificada]
+  B0 --> B1{Condicao}
+  B1 -- Tradicional --> B2[Atribuir revisor humano]
+  B1 -- IA --> B3[Atribuir revisor + ativar IA]
+
+  B2 --> B4[Revisor realiza revisao]
+  B3 --> B4
+
+  B4 --> B5[Coleta de timestamps e metadados]
+  B5 --> B6[Categorizacao de comentarios e defeitos]
+  B6 --> B7[Registrar aceitacao IA]
+  B7 --> B8[Exportar para planilha central]
+
+  %% AFTER
+  B8 --> C1[Validacao manual de 10 por cento]
+  C1 --> C2[Checar inconsistencias]
+  C2 --> C3[Ajustes no protocolo]
+
+  %% END
+  C3 --> D1[Aplicar questionarios]
+  D1 --> D2[Consolidacao e limpeza de dados]
+  D2 --> D3[Backup e assinatura de integridade]
+  D3 --> D4[Analise estatistica]
+```
 
 ---
 
