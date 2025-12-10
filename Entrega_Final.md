@@ -1,0 +1,1203 @@
+# Plano de Experimento – Scoping e Planejamento
+
+## 1. Identificação Básica
+
+### 1.1 Título do experimento
+**Avaliação da Efetividade da Revisão de Código Assistida por IA em Comparação com Revisão Humana Tradicional**
+
+### 1.2 ID / código
+**EXP-REV-IA-2025**
+
+
+### **1.3 Versão do documento e histórico de revisão**
+
+* **v1.0 (19/11/2025)** — Criação inicial do plano.
+* **v1.1 (22/11/2025)** — Inclusão completa do escopo, GQM, métricas, riscos e critérios.
+* **v1.2 (28/11/2025)** — Adição das seções: 10. População, Sujeitos e Amostragem; 11. Instrumentação e Protocolo Operacional; 12. Plano de Análise de Dados (Pré-execução).  
+* **v1.2 (05/12/2025)** — Adição do tópico 13 (Avaliação de validade) e ajustes gerais.
+
+### **1.4 Datas (criação, última atualização)**
+
+* **Criação:** 19/11/2025
+* **Última atualização:** 05/12/2025
+
+### 1.5 Autores (nome, área, contato)
+- **Maisa Pires** — Engenharia de Software — maisa.andrade@sga.pucminas.br
+
+### 1.6 Responsável principal (PI / dono do experimento)
+**Maisa Pires (Engenharia de Software)**
+
+### 1.7 Projeto / produto / iniciativa relacionada
+**Iniciativa de Melhoria de Qualidade de Código e Produtividade de Revisões do time de desenvolvimento web.**
+
+---
+
+## 2. Contexto e Problema
+
+### 2.1 Descrição do problema / oportunidade
+O time de desenvolvimento tem enfrentado aumento no volume de código entregue por sprint, tornando a revisão manual lenta, inconsistente e sujeita a falhas. Ferramentas de IA prometem automatizar parte da análise, reduzir retrabalho e aumentar a detecção de defeitos.  
+O experimento avaliará se a revisão assistida por IA traz benefícios reais de qualidade e eficiência em comparação ao processo tradicional.
+
+### 2.2 Contexto organizacional e técnico
+O estudo ocorrerá em uma empresa de médio porte, com foco em aplicações web.  
+- **Tecnologias predominantes:** Node.js, React, TypeScript  
+- **Ferramentas:** GitHub, GitHub Actions, solução de revisão por IA  
+- **Processo:** Scrum, sprints de 2 semanas  
+- **Ambiente:** pipelines automatizados, PRs obrigatórias
+
+### 2.3 Trabalhos e evidências prévias (internos e externos)
+**Internos:**
+- Aumento de bugs em produção apontado pela equipe de QA.
+- Teste exploratório inicial mostrou sugestões relevantes da IA.
+
+**Externos:**
+- Estudos recentes indicam que LLMs aumentam produtividade de revisão.
+- Relatórios da indústria destacam redução de carga cognitiva ao usar IA.
+
+### 2.4 Referencial teórico e empírico essencial
+- **Modelo GQM (Goal–Question–Metric)**
+- Literatura de **Code Review** (Fagan; Bacchelli & Bird)
+- Estudos sobre **LLMs aplicados à Engenharia de Software**
+- Categorias do **ISO/IEC 25010**
+
+---
+
+# 3. Objetivos e Questões (GQM)
+
+## 3.1 Objetivo geral (Goal Template)
+**Analisar** a efetividade das revisões de código assistidas por IA  
+**com o propósito de** comparar sua qualidade e eficiência  
+**sob a perspectiva de** desenvolvedores e do time de engenharia  
+**no contexto de** revisões de Pull Requests em um projeto web corporativo.
+
+---
+
+## 3.2 Objetivos específicos
+
+- **O1:** Comparar a eficiência (tempo, volume processado) entre revisão humana e revisão assistida por IA.  
+- **O2:** Avaliar o impacto da IA na detecção de defeitos e problemas de qualidade.  
+- **O3:** Medir a consistência das revisões (variação por revisor, tipo de problema, repetição).  
+- **O4:** Analisar a percepção dos desenvolvedores quanto à utilidade, clareza e confiabilidade das sugestões da IA.
+
+---
+
+## 3.3 Questões de pesquisa
+
+### **O1 – Eficiência**
+- **Q1.1:** A IA reduz o tempo total de revisão de Pull Requests?  
+- **Q1.2:** A IA aumenta o número de arquivos/linhas revisados por unidade de tempo?  
+- **Q1.3:** A IA reduz o tempo até a aprovação final da PR?
+
+### **O2 – Detecção de defeitos**
+- **Q2.1:** A IA identifica mais problemas de código do que revisões humanas?  
+- **Q2.2:** A IA identifica problemas diferentes dos detectados por humanos?  
+- **Q2.3:** As sugestões geradas pela IA resultam em mais correções efetivas?
+
+### **O3 – Consistência**
+- **Q3.1:** A IA produz revisões mais consistentes (menor variância entre revisões)?  
+- **Q3.2:** A IA mantém consistência em diferentes tipos de mudanças?  
+- **Q3.3:** A IA reduz divergências entre revisores humanos?
+
+### **O4 – Percepção dos desenvolvedores**
+- **Q4.1:** Desenvolvedores consideram as sugestões da IA úteis?  
+- **Q4.2:** Desenvolvedores consideram as explicações claras?  
+- **Q4.3:** Desenvolvedores confiam na revisão assistida por IA?
+
+---
+
+## 3.4 Tabela GQM (Objetivo – Perguntas – Métricas)
+
+| Objetivo | Pergunta | Métricas Associadas |
+|---------|----------|----------------------|
+| O1 | Q1.1 | M1 – Tempo total de revisão; M2 – Tempo até primeira resposta |
+| O1 | Q1.2 | M3 – Linhas revisadas por minuto; M4 – Arquivos revisados por PR |
+| O1 | Q1.3 | M1 – Tempo total de revisão; M5 – Tempo até aprovação final |
+| O2 | Q2.1 | M6 – Nº de defeitos identificados; M7 – Taxa de cobertura de problemas |
+| O2 | Q2.2 | M8 – Diversidade de categorias de defeitos; M6 – Nº de defeitos identificados |
+| O2 | Q2.3 | M9 – Nº de correções aplicadas; M10 – Taxa de aceitação das sugestões |
+| O3 | Q3.1 | M11 – Variância entre revisões; M6 – Nº de defeitos |
+| O3 | Q3.2 | M12 – Consistência por tipo de mudança; M7 – Cobertura de problemas |
+| O3 | Q3.3 | M11 – Variância; M13 – Divergência entre revisores |
+| O4 | Q4.1 | M14 – Índice de utilidade percebida; M15 – NPS interno |
+| O4 | Q4.2 | M16 – Clareza percebida; M14 – Utilidade |
+| O4 | Q4.3 | M17 – Índice de confiança; M15 – NPS interno |
+
+---
+
+## Tabela completa de métricas (nome, descrição e unidade)
+
+| Métrica | Descrição | Unidade |
+|--------|-----------|---------|
+| M1 | Tempo total da revisão de uma PR | minutos |
+| M2 | Tempo até a primeira resposta | minutos |
+| M3 | Linhas revisadas por minuto | linhas/min |
+| M4 | Arquivos revisados por PR | quantidade |
+| M5 | Tempo até aprovação final da PR | minutos |
+| M6 | Número total de defeitos identificados | contagem |
+| M7 | Cobertura de problemas em relação ao total conhecido | % |
+| M8 | Diversidade de categorias de defeitos | número de categorias |
+| M9 | Quantidade de correções aplicadas após sugestões | contagem |
+| M10 | Taxa de aceitação das sugestões da IA | % |
+| M11 | Variância entre revisões (consistência) | índice |
+| M12 | Consistência por tipo de mudança | índice |
+| M13 | Divergência entre revisores | índice |
+| M14 | Utilidade percebida (survey) | escala Likert |
+| M15 | NPS interno sobre a ferramenta | escore |
+| M16 | Clareza percebida das explicações | escala Likert |
+| M17 | Índice de confiança dos desenvolvedores | escala Likert |
+
+*(Total: 17 métricas, atendendo ao requisito de mínimo 10.)*
+
+---
+
+# 4. Escopo e contexto do experimento
+
+## 4.1 Escopo funcional / de processo (incluído e excluído)
+
+**Incluído:**
+- Revisão de PRs de backend e frontend.
+- Sugestões da IA dentro da plataforma GitHub.
+- Comparação direta entre revisões humanas e IA.
+- Coleta automática e manual de métricas.
+
+**Excluído:**
+- Avaliação de qualidade de testes automatizados.
+- Análise de performance de runtime.
+- Repositórios externos.
+- Projetos mobile nativos.
+
+---
+
+## 4.2 Contexto do estudo
+- Empresa de médio porte
+- Time com experiência variada (junior a sênior)
+- Projeto web corporativo, crítico para operações internas
+- Uso consolidado de PRs e pipelines de CI
+
+---
+
+## 4.3 Premissas
+- A ferramenta de IA estará operacional durante todo o período.
+- Participantes seguirão o processo de revisão normalmente.
+- Haverá volume suficiente de PRs para comparação.
+
+---
+
+## 4.4 Restrições
+- Tempo limitado (jan–mar/2026)
+- Ferramentas já definidas pela empresa
+- Acesso somente a repositórios internos
+
+---
+
+## 4.5 Limitações previstas
+- Generalização limitada a projetos web semelhantes.
+- Resultados podem variar por perfil dos revisores.
+- Ferramenta de IA usada pode não representar todas as soluções do mercado.
+
+---
+
+# 5. Stakeholders e impacto esperado
+
+## 5.1 Stakeholders principais
+- Desenvolvedores
+- QA
+- Tech Leads
+- Gestores de Produto
+- Engenharia de Plataforma
+
+## 5.2 Interesses e expectativas
+- **Devs:** reduzir carga de revisão e retrabalho  
+- **QA:** diminuir bugs escapados  
+- **Tech Leads:** padronização e consistência  
+- **Gestão:** avaliar custo–benefício da IA  
+- **Plataforma:** validar integração e impacto em pipelines  
+
+## 5.3 Impactos potenciais
+- Possível redução do tempo de ciclo das PRs  
+- Melhoria na qualidade de código  
+- Aumento temporário de carga de coleta/validação de métricas  
+- Mudança futura do processo de revisão  
+
+---
+
+# 6. Riscos de alto nível, premissas e critérios de sucesso
+
+## 6.1 Riscos de alto nível
+- Falha ou instabilidade da ferramenta de IA  
+- Baixa adesão dos desenvolvedores  
+- Volume insuficiente de PRs  
+- Mudanças de prioridade da empresa  
+
+## 6.2 Critérios de sucesso (go/no-go)
+- Coleta de dados completa e válida  
+- Diferenças claras entre revisão humana e IA  
+- Aceitação mínima da ferramenta pelos desenvolvedores  
+- Evidências úteis para tomada de decisão  
+
+## 6.3 Critérios de parada antecipada
+- Falha crítica da ferramenta de IA  
+- Impossibilidade de obter métricas essenciais  
+- Bloqueio organizacional ou mudança de escopo do produto
+
+---
+
+# 7. Modelo Conceitual e Hipóteses
+
+## 7.1 Modelo Conceitual do Experimento
+
+O modelo conceitual proposto assume que a revisão de código assistida por IA atua como um **amplificador das capacidades humanas** de revisão, afetando positivamente múltiplas dimensões do processo:
+
+```
+Fator Intervenção (Revisão Assistida por IA)
+         ↓
+[Eficiência]    → Redução do tempo de revisão
+         ↓
+[Qualidade]     → Aumento na detecção de defeitos
+         ↓
+[Consistência]  → Padronização das análises
+         ↓
+[Percepção]     → Aceitação e confiança dos desenvolvedores
+```
+
+**Premissas do modelo:**
+- A IA complementa (não substitui) a revisão humana
+- A ferramenta de IA gera sugestões relevantes e acionáveis
+- Desenvolvedores mantêm critério para aceitar/rejeitar sugestões
+- O contexto organizacional permanece estável durante o experimento
+
+## 7.2 Hipóteses Formais (H0, H1)
+
+### **Eficiência (O1)**
+- **H1₀:** O tempo médio de revisão de PRs com IA é igual ou maior que o tempo de revisão tradicional
+- **H1₁:** O tempo médio de revisão de PRs com IA é menor que o tempo de revisão tradicional (p < 0.05)
+
+### **Detecção de Defeitos (O2)**
+- **H2₀:** A revisão assistida por IA detecta igual ou menor número de defeitos que a revisão tradicional
+- **H2₁:** A revisão assistida por IA detecta maior número de defeitos que a revisão tradicional (p < 0.05)
+
+### **Consistência (O3)**
+- **H3₀:** A variância entre revisões com IA é igual ou maior que a variância entre revisões tradicionais
+- **H3₁:** A variância entre revisões com IA é menor que a variância entre revisões tradicionais (p < 0.05)
+
+### **Percepção (O4)**
+- **H4₀:** A utilidade percebida da revisão assistida por IA é neutra ou negativa (escore ≤ 3 em escala 5-point Likert)
+- **H4₁:** A utilidade percebida da revisão assistida por IA é positiva (escore > 3 em escala 5-point Likert)
+
+## 7.3 Nível de Significância e Considerações de Poder
+
+- **Nível de significância (α):** 0.05 para todos os testes
+- **Poder estatístico (1-β):** Alvo de 0.80 para detectar efeitos de tamanho médio (d = 0.5)
+- **Tamanho de efeito mínimo detectável:** Cohen's d = 0.5 (efeito médio)
+- **Considerações:**
+  - Amostra estimada: ~40-50 PRs por grupo (baseado em power analysis preliminar)
+  - Correção para múltiplas comparações: procedimento de Bonferroni quando aplicável
+  - Análises de sensibilidade para verificar robustez dos resultados
+
+---
+
+# 8. Variáveis, Fatores, Tratamentos e Objetos de Estudo
+
+## 8.1 Objetos de Estudo
+
+**Unidade primária de análise:** Pull Requests (PRs) de código
+- **Critérios de inclusão:**
+  - PRs de funcionalidades ou melhorias (excluindo hotfixes críticos)
+  - Tamanho: 100-500 linhas modificadas
+  - Tecnologias: TypeScript, React, Node.js
+  - Período: PRs abertas durante jan–mar/2026
+
+**Quantidade estimada:** 80-100 PRs no total
+
+## 8.2 Sujeitos / Participantes (Visão Geral)
+
+- **População:** Time de desenvolvimento web (backend + frontend)
+- **Amostra:** 12 desenvolvedores (6 backend, 6 frontend)
+- **Perfil:** Júnior a Sênior (distribuição balanceada)
+- **Experiência média:** 2-8 anos em desenvolvimento
+- **Familiaridade com PRs:** Todos possuem ≥6 meses usando processo atual
+
+## 8.3 Variáveis Independentes (Fatores) e Seus Níveis
+
+| Fator | Níveis | Descrição |
+|-------|--------|-----------|
+| **Tipo de Revisão** | 1. Tradicional (humana)<br>2. Assistida por IA | Condição experimental principal |
+| **Complexidade da PR** | 1. Baixa<br>2. Média<br>3. Alta | Classificação baseada em métricas objetivas |
+| **Experiência do Revisor** | 1. Júnior (<3 anos)<br>2. Pleno (3-6 anos)<br>3. Sênior (>6 anos) | Fator de bloqueio |
+
+## 8.4 Tratamentos (Condições Experimentais)
+
+### **Grupo Controle (Tradicional)**
+- Processo atual de revisão manual
+- 2 revisores humanos por PR
+- Ferramentas: GitHub PR interface apenas
+- Sem sugestões automatizadas
+
+### **Grupo Experimental (Assistida por IA)**
+- Processo atual + ferramenta de IA integrada
+- 1 revisor humano + sugestões da IA
+- Ferramentas: GitHub PR + extensão de IA
+- Sugestões automáticas ativas
+
+## 8.5 Variáveis Dependentes (Respostas)
+
+| Categoria | Variável | Métrica | Escala |
+|-----------|----------|---------|--------|
+| **Eficiência** | Tempo de revisão | M1, M2, M5 | Contínua (minutos) |
+| | Velocidade de análise | M3, M4 | Contínua (linhas/min) |
+| **Qualidade** | Defeitos detectados | M6, M7 | Contínua (contagem, %) |
+| | Diversidade de problemas | M8 | Contínua (categorias) |
+| **Consistência** | Variância entre revisões | M11, M12 | Contínua (índice) |
+| | Divergência | M13 | Contínua (índice) |
+| **Percepção** | Utilidade | M14 | Ordinal (Likert 1-5) |
+| | Confiança | M17 | Ordinal (Likert 1-5) |
+| | NPS | M15 | Intervalar (-100 a +100) |
+
+## 8.6 Variáveis de Controle / Bloqueio
+
+**Variáveis controladas (mantidas constantes):**
+- Ferramenta de versionamento (GitHub)
+- Template de PR
+- Critérios de aceitação
+- Horário de trabalho
+- Hardware/software básico
+
+**Fatores de bloqueio:**
+- Experiência do desenvolvedor (Júnior/Pleno/Sênior)
+- Tipo de tarefa (feature/bug/refactor)
+- Tecnologia (frontend/backend)
+
+## 8.7 Possíveis Variáveis de Confusão Conhecidas
+
+| Variável de Confusão | Estratégia de Mitigação |
+|----------------------|------------------------|
+| **Fadiga/aprendizado** | Contrabalanço na ordem dos tratamentos |
+| **Complexidade não medida** | Classificação objetiva prévia da PR |
+| **Variação motivacional** | Monitoramento via surveys de engajamento |
+| **Efeito Hawthorne** | Período de adaptação antes da coleta |
+| **Vieses de confirmação** | Blindagem parcial dos revisores quanto às hipóteses |
+
+---
+
+# 9. Desenho Experimental
+
+## 9.1 Tipo de Desenho
+
+**Desenho:** Medidas Repetidas com Blocos Incompletos
+
+**Justificativa:**
+- Cada desenvolvedor participa de ambas as condições (within-subjects)
+- Blocos por experiência e tipo de tarefa para controlar variabilidade
+- Design eficiente que requer menos participantes
+- Adequado para contexto organizacional com número limitado de desenvolvedores
+
+## 9.2 Randomização e Alocação
+
+**Procedimento de randomização:**
+1. PRs são classificadas por complexidade e tipo
+2. Atribuição aleatória à condição (IA vs Tradicional) dentro de cada estrato
+3. Revisores designados sequencialmente, balanceando carga de trabalho
+4. Ordem dos tratamentos contrabalanceada entre participantes
+
+**Ferramentas:** Script Python com randomização baseada em semente conhecida
+
+## 9.3 Balanceamento e Contrabalanço
+
+**Balanceamento de grupos:**
+- Distribuição igualitária de PRs complexas entre condições
+- Balanceamento por experiência dos revisores
+- Monitoramento contínuo do volume de PRs por condição
+
+**Contrabalanço para efeitos de ordem:**
+- Metade dos desenvolvedores inicia com condição IA, metade com Tradicional
+- Período de washout: 1 semana entre mudanças de condição
+- Análise estatística para detectar efeitos de carryover
+
+## 9.4 Número de Grupos e Sessões
+
+**Grupos experimentais:** 2 condições (IA vs Tradicional)
+
+**Participantes:** 12 desenvolvedores
+
+**Sessões por participante:**
+- 4 PRs na condição IA
+- 4 PRs na condição Tradicional
+- Total: 8 PRs por desenvolvedor (96 PRs no total)
+
+**Duração total:** 10 semanas (2 de adaptação + 8 de coleta)
+
+**Justificativa do tamanho:**
+- Amostra suficiente para poder estatístico adequado
+- Viável dentro das restrições organizacionais
+- Balanceamento entre robustez estatística e praticidade
+
+# **10. População, Sujeitos e Amostragem**
+
+## **10.1 População-alvo**
+
+A população-alvo deste experimento consiste em **desenvolvedores de software que trabalham com revisão de código em times de produto web**, especialmente:
+
+* desenvolvedores que utilizam **Pull Requests** como prática cotidiana;
+* profissionais que atuam em **projetos web modernos**, principalmente com **JavaScript/TypeScript**, **React**, **Node.js**;
+* equipes que seguem processos **ágeis** e utilizam plataformas como **GitHub**, **GitLab** ou similares.
+
+Em termos gerais, o experimento busca representar **desenvolvedores envolvidos em revisão de código em ambientes corporativos de desenvolvimento web**.
+
+---
+
+## **10.2 Critérios de inclusão de sujeitos**
+
+Um participante será elegível se atender aos seguintes critérios:
+
+* Ter **pelo menos 6 meses de experiência com Pull Requests** e revisão de código.
+* Atuar como **desenvolvedor backend ou frontend** no time participante.
+* Estar alocado no projeto durante todo o período de coleta (jan–mar/2026).
+* Ter conhecimento básico de ferramentas de versionamento (Git/GitHub).
+* Ter disponibilidade para participar das duas condições do experimento (tradicional e IA).
+
+---
+
+## **10.3 Critérios de exclusão de sujeitos**
+
+Um participante será excluído se:
+
+* Estiver em férias ou afastado durante mais de 30% do período de coleta.
+* Não possuir experiência mínima com PRs (menos de 6 meses).
+* For responsável direto pelo desenvolvimento da ferramenta de IA (evitar conflito de interesse).
+* Demonstrar indisponibilidade ou recusa em participar do treinamento prévio.
+* Não possuir acesso adequado aos repositórios internos.
+
+---
+
+## **10.4 Tamanho da amostra planejado (por grupo)**
+
+A amostra total estimada é de **12 desenvolvedores**, com divisão equilibrada:
+
+* **6 participantes** inicialmente no grupo **Tradicional**
+* **6 participantes** inicialmente no grupo **IA**
+
+Como o desenho é **cross-over**, todos os 12 participantes passam por ambas as condições em momentos distintos — portanto, a amostra funciona como medidas repetidas.
+
+**Justificativa:**
+
+* Equipes da empresa têm tamanho reduzido, tornando amostra maior inviável.
+* Power analysis estimou que **10–12 participantes** seriam suficientes para detectar efeito médio (d = 0.5) com poder 0.80.
+* O desenho contrabalanceado reduz a variabilidade intersujeitos.
+
+---
+
+## **10.5 Método de seleção / recrutamento**
+
+Será utilizada **amostragem de conveniência estruturada**, considerando:
+
+* Desenvolvedores disponíveis e alocados no projeto.
+* Balanceamento entre backend e frontend.
+* Diversidade de níveis de experiência (junior/pleno/sênior).
+
+O recrutamento ocorrerá por:
+
+1. **Convite formal** via e-mail / reunião do time.
+2. Explicação dos objetivos, riscos e benefícios.
+3. Obtenção de aceite explícito de participação.
+
+---
+
+## **10.6 Treinamento e preparação dos sujeitos**
+
+Antes da coleta, todos os participantes receberão um **treinamento rápido** composto de:
+
+* **Guia prático** sobre como interpretar as sugestões da IA.
+* **Demonstração da ferramenta** em uma PR exemplo.
+* **Orientações padronizadas** para manter consistência na análise.
+* **Checklist de boas práticas** aplicáveis nas duas condições.
+
+Objetivo: reduzir vieses de falta de conhecimento e minimizar curva de aprendizado.
+
+---
+
+# **11. Instrumentação e Protocolo Operacional**
+
+## **11.1 Instrumentos de coleta (questionários, logs, planilhas, etc.)**
+
+Os instrumentos principais serão:
+
+1. **Logs do GitHub**
+
+   * tempo até primeira resposta
+   * tempo total até aprovação
+   * número de comentários
+   * número de commits após revisão
+
+2. **Planilhas de registro manual (Google Sheets)**
+
+   * classificação da complexidade
+   * categorias dos defeitos identificados
+
+3. **Scripts automatizados (Python/Node.js)**
+
+   * extração de métricas de PRs
+   * coleta de timestamps
+   * cálculo de velocidade de revisão
+
+4. **Questionário de percepção (Likert 1–5)**
+
+   * utilidade
+   * clareza
+   * confiança
+   * satisfação geral
+
+5. **Formulário NPS interno**
+
+   * coleta de escore -100 a +100
+
+---
+
+## **11.2 Materiais de suporte (instruções, guias)**
+
+Serão produzidos e entregues aos participantes:
+
+* **Guia de instruções do experimento**
+* **Mini manual da ferramenta de IA**
+* **Roteiro de revisão de PR (checklist padronizado)**
+* **Vídeo curto (3–5 min)** demonstrando um exemplo de revisão com e sem IA
+* **FAQ interno** com perguntas comuns
+
+Para administradores do experimento:
+
+* Documento de **protocolo de coleta**
+* Orientações sobre randomização e contrabalanço
+* Scripts validados para coleta padronizada
+
+---
+
+
+## **11.3 Procedimento experimental (protocolo – passo a passo)**
+
+Abaixo está o protocolo completo, em ordem operacional, com a inclusão de um fluxograma que explica a operacionalização do experimento (instrumentos, variáveis, métricas e stakeholders).
+
+### **Antes da Coleta**
+
+1. Seleção dos participantes elegíveis (ver seção 10).
+2. Randomização das PRs por condição (script de randomização).
+3. Treinamento dos participantes (guia, video e checklist).
+4. Configuração dos scripts e dashboards internos (scripts de extracao, Google Sheets, dashboard).
+5. Período de adaptação (1–2 semanas): rodar PRs piloto para acostumar participantes.
+
+### **Durante a Coleta — Para cada PR**
+
+1. Identificação automática da condição (Tradicional ou IA) — *instrumento:* script de distribuicao.
+2. Atribuição da PR ao revisor usando balanceamento por experiência e tipo da PR.
+3. Revisor executa o processo normalmente (comentários, sugestões, decisões).
+4. Scripts registram timestamps (inicio, primeira resposta, final) e metadados (linhas modificadas, arquivos) — *metricas:* M1–M5.
+5. Comentários e defeitos são categorizados — *metricas:* M6–M8.
+6. Caso esteja na condição IA: registrar aceitação/rejeição das sugestões — *metricas:* M9–M10.
+7. Dados exportados para planilha central (CSV/Google Sheets) com campos padronizados.
+
+### **Após cada ciclo semanal**
+
+1. Validação manual de 10% das PRs.
+2. Detecção e correção de inconsistências nos logs.
+3. Ajustes no protocolo ou instrumentação (documentar).
+
+### **Encerramento**
+
+1. Aplicação dos questionários de percepção (Likert + NPS).
+2. Consolidação e limpeza dos dados.
+3. Backup da base final e assinatura de integridade.
+4. Início da análise estatística.
+
+---
+
+## **Fluxograma (Mermaid)**
+
+
+```mermaid
+flowchart TD
+
+  %% BEFORE
+  A1[Selecao de participantes] --> A2[Randomizacao das PRs]
+  A2 --> A3[Treinamento dos participantes]
+  A3 --> A4[Configuracao de scripts e dashboards]
+  A4 --> A5[Periodo de adaptacao]
+
+  %% DURING
+  A5 --> B0[PR identificada]
+  B0 --> B1{Condicao}
+  B1 -- Tradicional --> B2[Atribuir revisor humano]
+  B1 -- IA --> B3[Atribuir revisor + ativar IA]
+
+  B2 --> B4[Revisor realiza revisao]
+  B3 --> B4
+
+  B4 --> B5[Coleta de timestamps e metadados]
+  B5 --> B6[Categorizacao de comentarios e defeitos]
+  B6 --> B7[Registrar aceitacao IA]
+  B7 --> B8[Exportar para planilha central]
+
+  %% AFTER
+  B8 --> C1[Validacao manual de 10 por cento]
+  C1 --> C2[Checar inconsistencias]
+  C2 --> C3[Ajustes no protocolo]
+
+  %% END
+  C3 --> D1[Aplicar questionarios]
+  D1 --> D2[Consolidacao e limpeza de dados]
+  D2 --> D3[Backup e assinatura de integridade]
+  D3 --> D4[Analise estatistica]
+```
+
+---
+
+## **11.4 Plano de piloto**
+
+Um **piloto** será conduzido antes da coleta principal:
+
+* **Participantes:** 3 desenvolvedores
+* **PRs utilizadas:** 4 PRs pequenas (duas por condição)
+* **Objetivos:**
+
+  * validar clareza das instruções
+  * testar funcionamento da ferramenta de IA
+  * validar coleta automática
+  * identificar problemas no protocolo
+
+**Critérios para ajustes após o piloto:**
+
+* Dúvidas frequentes relatadas → melhorar documentação
+* Diferenças grandes de tempo por falha técnica → revisar scripts
+* Feedback negativo do fluxo → ajustar sequência de passos
+* Problemas de logs → corrigir instrumentação
+
+---
+
+# **12. Plano de Análise de Dados (Pré-execução)**
+
+## **12.1 Estratégia geral de análise**
+
+Para cada questão de pesquisa (Q1 a Q4), os dados serão analisados comparando:
+
+* **condição Tradicional X condição IA**,
+* usando métricas relacionadas à eficiência, qualidade, consistência e percepção.
+
+A estratégia geral é:
+
+1. Validar integridade dos dados.
+2. Avaliar normalidade das distribuições.
+3. Comparar condições usando testes estatísticos apropriados.
+4. Calcular tamanho de efeito (Cohen’s d, Cliff’s delta, etc.).
+5. Interpretar resultados à luz das hipóteses formais.
+
+---
+
+## **12.2 Métodos estatísticos planejados**
+
+Dependendo da distribuição:
+
+### **Para dados paramétricos:**
+
+* Paired t-test (para medidas repetidas)
+* ANOVA de medidas repetidas
+* Regressão linear (para controlar variáveis adicionais)
+
+### **Para dados não paramétricos:**
+
+* Wilcoxon signed-rank test
+* Mann-Whitney U (se necessário)
+* Teste de Friedman (k>2)
+
+### **Para variância / consistência:**
+
+* Teste de Levene
+* Teste de Brown–Forsythe
+
+### **Para percepção (survey):**
+
+* Análise descritiva
+* Testes não paramétricos (Likert)
+* Cálculo de NPS
+
+### **Tamanhos de efeito:**
+
+* Cohen’s d
+* Cliff’s delta
+* Eta squared (η²)
+
+---
+
+## **12.3 Tratamento de dados faltantes e outliers**
+
+### **Dados faltantes**
+
+* Será adotado **listwise deletion** quando o dado for essencial para responder a RQ.
+* Registro com >20% de campos incompletos será excluído da análise inferencial.
+* Dados faltantes não essenciais serão tratados com imputação simples (média/mediana), caso justificado.
+
+### **Outliers**
+
+* Detectados por:
+
+  * Boxplot (IQR > 1.5)
+  * Z-score > 3
+* Tratamento:
+
+  * Verificar causa (erro de coleta, instabilidade da IA, falha humana).
+  * Se erro técnico → corrigir ou remover.
+  * Se legítimo → manter, mas reportar com e sem outliers.
+
+---
+
+## **12.4 Plano de análise para dados qualitativos**
+
+Para comentários abertos, entrevistas rápidas e feedback textual:
+
+* Uso de **codificação aberta**
+* Agrupamento em **categorias temáticas** (utilidade, clareza, confiança, irritações, benefícios)
+* Contagem de frequência das categorias
+* Análise cruzada entre condições (IA vs Tradicional)
+* Identificação de padrões relevantes, como:
+
+  * motivos para aceitar ou rejeitar sugestões
+  * percepção de sobrecarga
+  * feedback sobre precisão da IA
+
+Os dados qualitativos serão utilizados para enriquecer a discussão final, não para análise estatística principal.
+
+---
+
+# **13. Avaliação de Validade (Ameaças e Mitigação)**
+
+## **13.1 Validade de Conclusão**
+
+**Ameaças:**
+1.  **Baixo poder estatístico:** Amostra pequena (~12 desenvolvedores, ~100 PRs) pode não detectar diferenças estatisticamente significativas, mesmo que elas existam (erro Tipo II).
+2.  **Violação de suposições dos testes:** Uso de testes paramétricos (t-test, ANOVA) sem verificar normalidade e homogeneidade de variâncias pode levar a conclusões incorretas.
+3.  **Erros de medição (ruído):** Medidas de tempo podem ser imprecisas devido a interrupções não registradas. Classificação manual de defeitos pode ser subjetiva.
+4.  **Vazamento de tratamentos (Carryover):** Experiência adquirida na condição de IA pode influenciar o desempenho na condição tradicional (e vice-versa), contaminando a comparação.
+5.  **Abandono/Atrito:** Perda de participantes durante o experimento pode desbalancear o design e introduzir viés de seleção.
+
+**Estratégias de Mitigação:**
+1.  Realizar *power analysis* prévio para justificar o tamanho da amostra. Reportar tamanhos de efeito (Cohen's d) independentemente da significância estatística.
+2.  Realizar testes de normalidade (Shapiro-Wilk) e homocedasticidade (Levene). Utilizar equivalentes não paramétricos (Wilcoxon, Friedman) quando as suposições forem violadas.
+3.  Implementar scripts de coleta automática de timestamps no GitHub para minimizar erro humano. Utilizar rubrica/catálogo de defeitos para padronizar a classificação e realizar treinamento e validação inter-avaliadores (kappa de Cohen).
+4.  Implementar período de *washout* (1 semana) entre as mudanças de condição e usar contrabalanço na ordem de apresentação dos tratamentos. Incluir "experiência com a ferramenta" como covariável na análise.
+5.  Manter engajamento dos participantes com comunicados claros. Planejar análise por *intention-to-treat* (incluir todos os alocados inicialmente) e realizar análise de sensibilidade para avaliar o impacto do abandono.
+
+---
+
+## **13.2 Validade Interna**
+
+**Ameaças:**
+1.  **História (History):** Eventos externos (ex: lançamento de nova ferramenta, pressão por prazos) ocorrendo durante o experimento podem afetar o desempenho dos revisores de forma diferente entre os grupos.
+2.  **Maturação (Maturation):** Melhoria natural das habilidades dos desenvolvedores ao longo do tempo (aprendizado), confundindo-se com o efeito do tratamento.
+3.  **Seleção (Selection):** Diferenças sistemáticas entre os desenvolvedores que revisam PRs em uma condição versus outra, caso a randomização falhe.
+4.  **Regressão à Média (Regression to the mean):** Se PRs muito complexas (outliers) forem alocadas para uma condição, a performance em revisões subsequentes pode "regredir" para a média, simulando um efeito.
+5.  **Instrumentação (Instrumentation):** Mudanças no protocolo de medição (ex: versão da ferramenta de IA, critérios de classificação) durante a coleta podem gerar diferenças artificiais.
+
+**Estratégias de Controle:**
+1.  Documentar qualquer evento organizacional relevante durante o período. Realizar a randomização e a execução em um curto espaço de tempo (10 semanas) para minimizar essa ameaça.
+2.  Utilizar design *within-subjects* (todos passam pelas duas condições) e contrabalançar a ordem. O efeito de aprendizado, se simétrico, é controlado.
+3.  Utilizar randomização estruturada (por bloco) para alocar PRs e revisores às condições, garantindo balanceamento por experiência e complexidade. Verificar o balanceamento inicial com testes estatísticos.
+4.  Classificar PRs por complexidade *antes* da randomização e garantir distribuição balanceada de níveis de complexidade entre as condições.
+5.  Congelar a versão da ferramenta de IA durante o estudo. Manter os instrumentos de coleta (scripts, planilhas, questionários) idênticos do início ao fim.
+
+---
+
+## **13.3 Validade de Constructo**
+
+**Ameaças:**
+1.  **Definição operacional inadequada:** As métricas escolhidas (ex: "tempo de revisão", "defeito") podem não capturar integralmente os constructos teóricos de "eficiência" e "qualidade".
+2.  **Viés de monométodo:** Confiar em apenas um método (ex: logs automáticos) para medir um constructo complexo.
+3.  **Interação do tratamento com o teste:** A mera consciência de estar sendo avaliado (efeito Hawthorne) pode fazer os desenvolvedores se comportarem de forma diferente, especialmente na condição nova (IA).
+4.  **Expectativas dos participantes:** Saber que a IA é o foco do estudo pode criar um viés de desejabilidade social (elogiar a ferramenta) ou, ao contrário, um viés de resistência.
+
+**Estratégias para Redução de Ambiguidades:**
+1.  Adotar uma abordagem multi-métrica para cada constructo (ex: eficiência medida por tempo total, velocidade e tempo até primeira resposta). Validar as definições operacionais com tech leads antes do início.
+2.  Utilizar **triangulação de métodos**: combinar dados objetivos (logs), observacionais (categorização) e subjetivos (questionários) para medir o mesmo constructo.
+3.  Incluir um período de adaptação/`run-in` onde os participantes usam ambas as condições sem que os dados sejam coletados para a análise principal, reduzindo a novidade.
+4.  Garantir o anonimato nas respostas dos questionários de percepção. Enfatizar nos briefings que o objetivo é avaliar o *processo*, não o desempenho individual. Incluir perguntas tanto positivas quanto negativas nos surveys.
+
+---
+
+## **13.4 Validade Externa**
+
+**Ameaças:**
+1.  **Amostra não representativa:** Participantes são de uma única empresa, com cultura e stack tecnológica específicas, limitando a generalização.
+2.  **Efeito de interação da seleção e do tratamento:** Os benefícios (ou malefícios) da IA podem ser específicos para desenvolvedores com o perfil de experiência da amostra (ex: funcionar melhor para juniores).
+3.  **Contexto do experimento artificial:** O protocolo controlado (checklists, treinamento) pode não refletir a realidade caótica do dia a dia, onde múltiplas tarefas competem por atenção.
+4.  **Características do tratamento:** Os resultados são válidos para uma ferramenta específica de IA e sua integração com o GitHub. Outras ferramentas podem ter desempenho diferente.
+
+**Limitações para Generalização:**
+*   Os resultados podem ser **generalizáveis** para:
+    *   Times de desenvolvimento web corporativo de médio porte.
+    *   Projetos que utilizam práticas ágeis e revisão por PRs em plataformas como GitHub/GitLab.
+    *   Linguagens e stacks similares (TypeScript, React, Node.js).
+*   A generalização pode ser **limitada** por:
+    *   Diferenças culturais organizacionais (ex: pressão por velocidade extrema).
+    *   Stacks tecnológicas radicalmente diferentes (ex: mainframe, embarcados).
+    *   Ferramentas de IA com capacidades substancialmente inferiores ou superiores.
+    *   Times totalmente remotos ou com dinâmicas de comunicação muito distintas.
+
+---
+
+## **13.5 Resumo das Principais Ameaças e Estratégias de Mitigação**
+
+| Categoria da Ameaça | Ameaça Mais Crítica | Estratégia de Mitigação Planejada |
+| :--- | :--- | :--- |
+| **Conclusão** | Baixo poder estatístico (não detectar efeito real). | Reportar tamanhos de efeito (Cohen's d) e intervalos de confiança, independente do p-valor. Justificar tamanho amostral com *power analysis*. |
+| **Interna** | Vazamento de tratamentos (Carryover) e Aprendizado. | Utilizar design *cross-over* com contrabalanço de ordem e período de *washout*. Incluir "ordem do tratamento" como fator na análise. |
+| **Constructo** | Viés de desejabilidade social nas respostas de percepção. | Garantir anonimato nos questionários. Incluir perguntas de validação e misturar itens positivos/negativos. Triangular com dados objetivos. |
+| **Externa** | Amostra específica de uma única empresa/stack. | Descrever minuciosamente o contexto, participantes e materiais no relatório. Evitar generalizações amplas; sugerir replicação em outros contextos. |
+| **Operacional** | Falha na coleta automática de dados (logs). | Realizar piloto para testar scripts. Implementar validação manual semanal de 10% dos dados coletados. Ter planilha de fallback para registro manual. |
+
+
+# 14. Ética, Privacidade e Conformidade
+
+## 14.1 Questões Éticas (Uso de Sujeitos, Incentivos, etc.)
+
+**Potenciais Questões Éticas:**
+
+1. **Pressão para Participar:** Desenvolvedores podem sentir-se obrigados a participar devido à hierarquia organizacional.
+2. **Avaliação de Desempenho Implícita:** Os dados coletados poderiam ser mal interpretados como avaliação individual de desempenho.
+3. **Sobrecarga de Trabalho:** Participação no experimento pode aumentar a carga de trabalho temporariamente.
+4. **Viés de Confirmação Organizacional:** Expectativa da organização de que a ferramenta de IA será bem-sucedida pode influenciar os resultados.
+5. **Privacidade do Código:** Revisão de código pode expor decisões técnicas e potenciais vulnerabilidades.
+
+**Estratégias de Tratamento:**
+
+- **Participação Voluntária:** Enfatizar explicitamente que a participação é voluntária e que não haverá repercussões negativas por recusa.
+- **Desvinculação de Avaliação:** Garantir que os dados coletados **não** serão utilizados para avaliação de desempenho individual. Os dados serão analisados de forma agregada e anonimizada.
+- **Compensação de Tempo:** Negociar com a gestão para que o tempo dedicado ao experimento seja contabilizado como horas de trabalho normais, não como sobrecarga.
+- **Cegamento Parcial:** Não revelar hipóteses específicas aos participantes para minimizar viés de confirmação.
+- **Confidencialidade do Código:** Restringir o acesso aos dados brutos (código e comentários) apenas à equipe do experimento e garantir que não serão compartilhados externamente.
+
+## 14.2 Consentimento Informado
+
+**Processo de Consentimento:**
+
+1. **Sessão de Esclarecimento:** Realizar uma reunião com todos os potenciais participantes para apresentar:
+   - Objetivos do experimento e questões de pesquisa.
+   - Descrição das duas condições (Tradicional e IA).
+   - Duração estimada e atividades envolvidas.
+   - Riscos potenciais (sobrecarga temporária, possível frustração com a ferramenta).
+   - Benefícios esperados (melhoria de processo, aprendizado com nova tecnologia).
+   - Garantias de voluntariedade, anonimização e não-uso para avaliação.
+   - Direito de desistir a qualquer momento, sem necessidade de justificativa.
+
+2. **Documento de Consentimento:** Fornecer um documento de consentimento por escrito (digital) contendo todas as informações acima.
+
+3. **Registro do Consentimento:** Os participantes deverão assinar (digitalmente) o documento de consentimento, que será armazenado de forma segura e separada dos dados da pesquisa.
+
+4. **Ponto de Contato:** Designar um pesquisador (responsável principal) como ponto de contato para dúvidas e preocupações éticas durante todo o experimento.
+
+## 14.3 Privacidade e Proteção de Dados
+
+**Dados Coletados e Tratamento:**
+
+| Categoria de Dado | Tipo de Dado | Nível de Identificação | Período de Retenção | Medidas de Proteção |
+|-------------------|--------------|------------------------|----------------------|---------------------|
+| **Dados de Atividade** | Timestamps, ações na PR, IDs de PRs | Pseudoanônimo (vinculado a ID único) | 2 anos após término do estudo | Criptografia em repouso, acesso restrito |
+| **Dados de Conteúdo** | Comentários, código revisado, sugestões da IA | Potencialmente identificável | 1 ano após término do estudo | Armazenamento em repositório privado, anonimização na análise qualitativa |
+| **Dados de Percepção** | Respostas a questionários (Likert, NPS) | Anônimo | 2 anos após término do estudo | Coleta anônima (sem vínculo direto com e-mail/ID) |
+| **Metadados** | Experiência do desenvolvedor (junior/pleno/sênior) | Pseudônimo (vinculado a categoria) | 2 anos após término do estudo | Agregação em categorias amplas |
+
+**Medidas de Segurança:**
+- **Anonimização:** Substituir nomes e e-mails por IDs únicos nos conjuntos de dados analíticos.
+- **Controle de Acesso:** Acesso aos dados brutos restrito aos pesquisadores principais. Dados anonimizados podem ser compartilhados com a equipe de análise.
+- **Armazenamento Seguro:** Dados serão armazenados em repositório corporativo seguro com criptografia.
+- **Destruição Programada:** Dados brutos identificáveis serão destruídos após o período de retenção.
+
+## 14.4 Aprovações Necessárias
+
+**Órgãos/Entidades para Aprovação:**
+
+1. **Gestores de Engenharia e Produto:** Para autorizar a participação do time e o uso de tempo de trabalho.
+   - *Status:* Pendente de apresentação formal do plano.
+
+2. **Comitê de Ética em Pesquisa (CEP) da Instituição de Ensino (se aplicável):** Para avaliação ética formal, considerando que o experimento é parte de um trabalho acadêmico.
+   - *Status:* A ser submetido após finalização do plano.
+
+3. **Data Protection Officer (DPO) / Área Jurídica da Empresa:** Para revisar e aprovar o plano de proteção de dados e consentimento, garantindo conformidade com LGPD.
+   - *Status:* A ser agendado após validação dos gestores.
+
+4. **Responsável pela Segurança da Informação:** Para avaliar riscos de exposição de código e dados sensíveis.
+   - *Status:* A ser contatado paralelamente ao jurídico.
+
+**Plano de Aprovações:**
+1. Finalizar e revisar internamente o plano experimental.
+2. Apresentar para gestores e obter aceite de princípio.
+3. Submeter ao CEP (em paralelo, iniciar diálogo com DPO/Jurídico).
+4. Incorporar eventuais ajustes solicitados.
+5. Obter aprovação final por escrito de todos os órgãos antes do recrutamento.
+
+---
+
+# 15. Recursos, Infraestrutura e Orçamento
+
+## 15.1 Recursos Humanos e Papéis
+
+| Nome / Função | Papel no Experimento | Responsabilidades Principais | Alocação Estimada |
+|---------------|----------------------|------------------------------|-------------------|
+| **Maisa Pires** | Pesquisadora Principal (PI) | Coordenação geral, desenho experimental, análise de dados, redação de relatórios. | 50% do tempo por 14 semanas |
+| **Tech Lead do Time** | Co-pesquisador / Especialista de Domínio | Validação do contexto, apoio no recrutamento, revisão dos materiais, interpretação dos resultados. | 10% do tempo (pontual) |
+| **Dev Sênior (Voluntário)** | Suporte Técnico / Operações | Ajuda na configuração de scripts, solução de problemas técnicos durante a coleta. | 5% do tempo (pontual) |
+| **Estagiário de Dados** | Assistente de Análise | Auxílio na limpeza e organização inicial dos dados, geração de gráficos básicos. | 20h no total |
+| **Participantes (12 Devs)** | Sujeitos do Experimento | Execução das revisões conforme protocolo, preenchimento de questionários. | ~1-2h/semana cada por 8 semanas |
+
+## 15.2 Infraestrutura Técnica Necessária
+
+**Ambientes e Ferramentas:**
+
+1. **Repositórios de Código:**
+   - Acesso ao repositório GitHub principal do projeto.
+   - Branch ou tag específica para PRs do experimento (se necessário).
+
+2. **Ferramenta de IA para Revisão:**
+   - Licença/assinatura ativa para a ferramenta escolhida (ex: GitHub Copilot para PRs, CodeRabbit, etc.).
+   - Integração configurada no repositório ou na organização GitHub.
+
+3. **Ambiente de Coleta e Análise de Dados:**
+   - Conta em serviço de cloud (Google Workspace ou similar) para Google Sheets/Forms.
+   - Ambiente Python (Jupyter Notebook ou script) com bibliotecas (pandas, numpy, scipy, matplotlib) para análise.
+   - Espaço em storage corporativo (Google Drive, OneDrive) para backup seguro.
+
+4. **Ferramentas de Comunicação:**
+   - Canal dedicado no Slack/Teams para suporte aos participantes.
+   - Calendário compartilhado para marcos e checkpoints.
+
+## 15.3 Materiais e Insumos
+
+| Material / Insumo | Descrição | Quantidade | Status |
+|-------------------|-----------|------------|--------|
+| **Licença da Ferramenta de IA** | Assinatura corporativa para a ferramenta escolhida. | 1 licença para a org | A verificar |
+| **Scripts de Automação** | Código para randomização, coleta de logs e análise preliminar. | 1 conjunto | A desenvolver |
+| **Documentação e Guias** | PDFs e vídeos de treinamento para participantes. | 1 conjunto | A desenvolver |
+| **Formulários Eletrônicos** | Questionários no Google Forms. | 2-3 formulários | A desenvolver |
+| **Planilhas de Controle** | Google Sheets para registro manual e consolidação. | 2-3 planilhas | A desenvolver |
+
+## 15.4 Orçamento e Custos Estimados
+
+| Item de Custo | Descrição | Custo Estimado (R$) | Fonte de Financiamento |
+|---------------|-----------|----------------------|------------------------|
+| **Custo de Pessoal** | Horas dedicadas pela pesquisadora principal e especialistas. | Custo absorvido (pesquisa acadêmica / tempo interno) | Empresa / Universidade |
+| **Licença de Software** | Custo incremental da ferramenta de IA (se não estiver já contratada). | 0 - 500/mês (varia por ferramenta) | Orçamento de Engenharia / Inovação |
+| **Infraestrutura Cloud** | Uso marginal de serviços (Google Workspace, storage). | ~50 | Custo operacional existente |
+| **Material de Divulgação** | Produção de vídeos ou gráficos para comunicação interna. | ~100 | Orçamento de Comunicação / Pesquisa |
+| **Total Estimado** | | **R$ 150 - R$ 650** | |
+
+**Observação:** O principal custo é o tempo das pessoas. A alocação já foi negociada como parte das atividades de melhoria contínua e pesquisa.
+
+---
+
+# 16. Cronograma, Marcos e Riscos Operacionais
+
+## 16.1 Macrocronograma (Até o Início da Execução)
+
+| Fase | Atividade | Data Início | Data Término | Marco / Entregável |
+|------|-----------|-------------|--------------|-------------------|
+| **Fase 1: Preparação (4 semanas)** | Finalização e aprovação do Plano de Experimento | 05/12/2025 | 12/12/2025 | Plano v2.0 aprovado |
+| | Submissões éticas e jurídicas (CEP, DPO) | 13/12/2025 | 10/01/2026 | Aprovações formais |
+| | Desenvolvimento de instrumentos (scripts, formulários, guias) | 13/12/2025 | 17/01/2026 | Pacote de instrumentos pronto |
+| **Fase 2: Piloto (2 semanas)** | Execução do Piloto com 3 desenvolvedores | 20/01/2026 | 31/01/2026 | Relatório do Piloto e ajustes |
+| | Revisão pós-piloto e ajustes finais | 03/02/2026 | 07/02/2026 | Protocolo final congelado |
+| **Fase 3: Comunicação e Mobilização (1 semana)** | Comunicação formal ao time, recrutamento e treinamento | 10/02/2026 | 14/02/2026 | Consentimentos assinados, time treinado |
+| **Fase 4: Execução (10 semanas)** | **Início da Coleta de Dados Principal** | **17/02/2026** | 28/04/2026 | Dados coletados |
+
+## 16.2 Dependências entre Atividades
+
+```mermaid
+graph TD
+    A[Plano Finalizado] --> B[Submissao CEP/DPO]
+    A --> C[Desenvolvimento Instrumentos]
+    B --> D[Aprovacoes Obtidas]
+    C --> E[Instrumentos Prontos]
+    D --> F[Execucao do Piloto]
+    E --> F
+    F --> G[Ajustes Pós-Piloto]
+    G --> H[Treinamento & Recrutamento]
+    H --> I[INICIO COLETA PRINCIPAL]
+```
+
+## 16.3 Riscos Operacionais e Plano de Contingência
+
+| Risco Operacional | Probabilidade | Impacto | Ação de Mitigação | Plano de Contingência |
+|-------------------|---------------|---------|-------------------|-----------------------|
+| **Atraso nas aprovações éticas/jurídicas** | Média | Alto | Iniciar contato informal com DPO e gestores durante a elaboração do plano. | Adiar início do piloto. Reduzir período de coleta principal se necessário, mantendo o tamanho amostral. |
+| **Baixa adesão no recrutamento (<8 devs)** | Baixa | Alto | Comunicar benefícios claros e garantir anonimato. Envolver tech lead no recrutamento. | Estender o recrutamento para outro time semelhante. Redesenhar o estudo para *within-subjects* com menos participantes, aumentando o número de PRs por participante. |
+| **Falha técnica na ferramenta de IA** | Média | Crítico | Testar exaustivamente no piloto. Ter contato direto com suporte da ferramenta. | Pausar a condição experimental. Coletar dados apenas da condição tradicional como estudo observacional. Considerar ferramenta alternativa se o período permitir. |
+| **Volume insuficiente de PRs** | Baixa | Médio | Coordenar com PO/Tech Lead para garantir fluxo de features durante o período. Incluir PRs de refatoração e bug fixes de média complexidade. | Estender o período de coleta por mais 2-3 sprints. Reduzir o número mínimo de linhas das PRs elegíveis. |
+| **Ausência/Saída de participante chave** | Baixa | Médio | Ter um participante reserva treinado. Documentar o protocolo de forma que seja fácil transferir responsabilidades. | Redistribuir as PRs do participante entre os demais. Se for pesquisador principal, transferir a coordenação para o co-pesquisador (Tech Lead). |
+
+---
+
+# 17. Governança do Experiment
+
+## 17.1 Papéis e Responsabilidades Formais
+
+| Papel | Pessoa/Função | Responsabilidades | Nível de Autoridade |
+|-------|---------------|-------------------|---------------------|
+| **Dono do Experimento (Sponsor)** | Gerente de Engenharia | Garantir recursos, remover obstáculos organizacionais, decisão final baseada em resultados. | Aprovação de orçamento e decisão de implementação. |
+| **Pesquisadora Principal (PI)** | Maisa Pires | Execução operacional, garantia da qualidade científica e ética, análise, relatório final. | Decisões diárias de operação e análise. |
+| **Comitê Diretivo** | PI + Tech Lead + Gerente | Revisão de marcos, avaliação de riscos, decisão sobre mudanças de escopo. | Decisões sobre continuidade, ajustes de escopo. |
+| **Executores** | Participantes (Devs) | Executar as revisões conforme protocolo. | Nenhuma sobre o desenho. |
+| **Apoio Técnico** | Dev Sênior Voluntário | Suporte a problemas técnicos com scripts e ferramentas. | Nenhuma. |
+
+## 17.2 Ritos de Acompanhamento Pré-execução
+
+| Rito | Objetivo | Participantes | Frequência | Pró-Forma / Artefato |
+|------|----------|---------------|------------|----------------------|
+| **Kick-off** | Alinhar objetivos, escopo e cronograma com stakeholders. | Sponsor, PI, Tech Lead, PO | Uma vez | Ata de reunião, plano aprovado. |
+| **Checkpoint de Aprovações** | Acompanhar status das aprovações éticas e jurídicas. | PI, Tech Lead | Semanal | Checklist de status. |
+| **Revisão de Instrumentos** | Validar scripts, formulários e guias antes do piloto. | PI, Tech Lead, Apoio Técnico | Quando prontos | Checklist de validação. |
+| **Pós-Piloto** | Avaliar resultados do piloto e aprovar ajustes. | Comitê Diretivo | Uma vez | Relatório do Piloto e Plano de Ajustes. |
+| **Go/No-Go Final** | Decisão formal para iniciar a coleta principal. | Comitê Diretivo | Uma vez | Checklist de Prontidão assinado. |
+
+## 17.3 Processo de Controle de Mudanças no Plano
+
+1.  **Identificação:** Qualquer membro da equipe pode identificar a necessidade de uma mudança.
+2.  **Proposta:** A mudança deve ser documentada em um **Formulário de Mudança**, contendo:
+    - Descrição da mudança.
+    - Justificativa (problema, risco, oportunidade).
+    - Impacto no cronograma, recursos, escopo e validade.
+    - Alternativas consideradas.
+3.  **Análise:** A PI analisa a proposta e leva ao **Comitê Diretivo** para discussão.
+4.  **Decisão:** O Comitê Diretivo decide por: Aprovar, Rejeitar ou Aprovar com modificações.
+5.  **Implementação e Comunicação:** Se aprovada, a PI atualiza o plano de experimento (com registro de versão), os instrumentos afetados e **comunica a mudança a todos os stakeholders impactados**, especialmente os participantes.
+6.  **Registro:** O formulário de mudança aprovado é arquivado com a documentação do experimento.
+
+---
+
+# 18. Plano de Documentação e Reprodutibilidade
+
+## 18.1 Repositórios e Convenções de Nomeação
+
+**Estrutura de Repositórios:**
+
+- `Experimento-Review-IA/`
+    - `1-Planejamento/`
+        - `Plano_Experimento_vX.X.md`
+        - `Aprovacoes/` (PDFs de aprovações)
+        - `Comunicacao/` (E-mails, atas)
+    - `2-Instrumentos/`
+        - `Scripts/` (Coleta, Randomização, Análise Preliminar)
+        - `Formularios/` (Links e PDFs dos questionários)
+        - `Guias_Treinamento/` (Manuais, vídeos, checklists)
+    - `3-Dados/`
+        - `Brutos_Identificaveis/` (Acesso restrito, criptografado)
+        - `Processados_Anonimizados/` (CSVs para análise)
+        - `Codebook.md` (Dicionário de dados e variáveis)
+    - `4-Analise/`
+        - `Notebooks_Analise/` (Jupyter Notebooks/R Scripts)
+        - `Resultados/` (Tabelas, gráficos, saídas estatísticas)
+    - `5-Relatorios/`
+        - `Relatorio_Final.md`
+
+**Convenções de Nomeação:**
+- Arquivos: `AAAAMMDD_Tipo_Descricao_Versao.ext`
+  - Ex: `20250217_Script_ColetaLogsGitHub_v1.2.py`
+- PRs do Experimento: Tag `[EXP-REV]` no título.
+- IDs de Participantes: `P##` (ex: P01, P02).
+
+## 18.2 Templates e Artefatos Padrão
+
+Todos os templates estarão na pasta `2-Instrumentos/Templates/`:
+
+1.  **Template de Consentimento Informado**
+2.  **Template de Questionário de Percepção (Likert 5 pontos)**
+3.  **Template de Planilha de Categorização de Defeitos**
+4.  **Template de Relatório Semanal de Status (para PI)**
+5.  **Template de Formulário de Mudança**
+6.  **Checklist de Prontidão (DoR)**
+
+## 18.3 Plano de Empacotamento para Replicação Futura
+
+Para permitir a replicação do estudo, será criado um **Pacote de Reprodutibilidade** contendo:
+
+1.  **Documentação do Protocolo:** Versão final do plano, com todas as mudanças aprovadas documentadas.
+2.  **Instrumentos Limpos:** Versões finais dos scripts de randomização e coleta, formulários de survey, guias de treinamento e rubrica de categorização.
+3.  **Dados Anonimizados de Exemplo:** Um subconjunto anonimizado e sintético dos dados (para fins de demonstração e teste dos scripts).
+4.  **Scripts de Análise Comentados:** Notebooks Jupyter ou scripts R/Python com toda a análise estatística, extensivamente comentados.
+5.  **Manual do Replicador:** Um arquivo `README_REPLICACAO.md` com instruções passo a passo para:
+    - Configurar o ambiente (ferramenta de IA, repositório).
+    - Executar a randomização.
+    - Coletar os dados.
+    - Reproduzir as análises.
+
+Este pacote será versionado e disponibilizado em um repositório interno (e possivelmente em repositório acadêmico aberto, se os dados forem totalmente anonimizados e a empresa autorizar).
+
+---
+
+# 19. Plano de Comunicação
+
+## 19.1 Públicos e Mensagens-Chave Pré-execução
+
+| Público | Mensagem-Chave | Objetivo da Comunicação |
+|---------|----------------|--------------------------|
+| **Patrocinador (Gerência)** | "O experimento gerará evidências para decisão sobre adoção de IA, com baixo custo e risco controlado." | Obter apoio e recursos. |
+| **Time de Desenvolvimento (Participantes)** | "Sua participação é voluntária e confidencial, e ajudará a melhorar nosso processo de revisão para todos." | Garantir adesão e engajamento ético. |
+| **Time de Desenvolvimento (Não Participantes)** | "Um experimento está ocorrendo; algumas PRs podem ter fluxos diferentes. Obrigado pela compreensão." | Evitar ruído e confusão. |
+| **Product Owners & QA** | "O experimento pode gerar PRs de qualidade ligeiramente diferente; manteremos vocês informados." | Gerenciar expectativas sobre entregas. |
+| **Comunidade Técnica Interna** | "Estamos conduzindo um estudo controlado sobre IA em code review. Compartilharemos aprendizados." | Promover cultura data-driven. |
+
+## 19.2 Canais e Frequência de Comunicação
+
+| Canal | Público | Frequência | Responsável |
+|-------|---------|------------|-------------|
+| **Reunião 1:1 / Pequeno Grupo** | Patrocinador, Comitê Diretivo | Quinzenal | PI |
+| **E-mail Formal** | Todos os stakeholders | Em marcos (Kick-off, Go/No-Go, Término) | PI |
+| **Canal no Slack/Teams** | Participantes e equipe de suporte | Diário (para suporte operacional) | PI / Apoio Técnico |
+| **Intranet / Wiki da Empresa** | Comunidade técnica interna | No início e no final (resultados) | PI |
+| **Apresentação em Reunião de Time** | Time de Desenvolvimento | No recrutamento e na apresentação dos resultados | PI com Tech Lead |
+
+## 19.3 Pontos de Comunicação Obrigatórios
+
+1.  **Anúncio do Experimento:** Após aprovações, antes do recrutamento.
+2.  **Início do Período de Coleta:** Quando a primeira PR do experimento for aberta.
+3.  **Mudanças Relevantes no Protocolo:** Qualquer ajuste aprovado pelo Comitê Diretivo que afete os participantes.
+4.  **Interrupção ou Cancelamento:** Em caso de problemas graves (ex: falha da ferramenta).
+5.  **Conclusão da Coleta de Dados:** Fim da fase operacional.
+6.  **Divulgação dos Resultados:** Apresentação dos principais achados para os stakeholders.
+
+---
+
+# 20. Critérios de Prontidão para Execução (Definition of Ready)
+
+## 20.1 Checklist de Prontidão
+
+Marque com [X] quando completo.
+
+**Governança e Aprovações:**
+- [ ] Plano de Experimento final revisado e aprovado pelo Comitê Diretivo.
+- [ ] Aprovação formal do Gerente Patrocinador (Sponsor).
+- [ ] Aprovação ética (do CEP, se aplicável) obtida e documentada.
+- [ ] Aprovação/avaliação da Área Jurídica/DPO obtida e documentada.
+- [ ] Consentimento informado assinado por **todos** os participantes.
+
+**Recursos e Infraestrutura:**
+- [ ] Licença/ferramenta de IA configurada, testada e operacional no repositório alvo.
+- [ ] Scripts de coleta e randomização desenvolvidos, testados e versionados.
+- [ ] Instrumentos de coleta (forms, planilhas) prontos e testados.
+- [ ] Guias de treinamento e materiais de suporte para participantes finalizados.
+- [ ] Ambiente de análise de dados (notebooks, software) configurado.
+- [ ] Plano de backup e segurança dos dados implementado.
+
+**Pessoas e Processo:**
+- [ ] Número mínimo de participantes recrutados e confirmados (>=8).
+- [ ] Sessão de treinamento realizada com todos os participantes.
+- [ ] Tech Lead e PO cientes do cronograma e do impacto no fluxo de trabalho.
+- [ ] Canal de suporte (Slack/Teams) criado e comunicado.
+- [ ] Plano de comunicação para marcos executado (anúncio inicial feito).
+
+**Operacional:**
+- [ ] Piloto executado, analisado e ajustes incorporados ao protocolo.
+- [ ] Lista inicial de PRs elegíveis identificada (ou pipeline garantida).
+- [ ] Sistema de randomização (script) pronto para a primeira rodada.
+
+## 20.2 Aprovações Finais para Iniciar a Operação
+
+A ordem de execução da coleta principal **só será autorizada** após:
+
+1.  **Verificação:** A PI preencher e assinar o Checklist de Prontidão acima.
+2.  **Revisão:** O Checklist assinado ser revisado e aprovado pelo **Tech Lead** (como representante do Comitê Diretivo).
+3.  **Autorização Final:** O **Gerente Patrocinador** dar o aceite final, por e-mail ou documento assinado, liberando o início da coleta.
+
+**Registro:** O Checklist assinado e o e-mail de autorização final serão arquivados na pasta `1-Planejamento/Aprovacoes/`.
